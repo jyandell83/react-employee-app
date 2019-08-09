@@ -12,11 +12,15 @@ class CreateEmployee extends Component {
             [e.target.name]: e.target.value
         })
     }
+    submitHandler = (e) =>  {
+        e.preventDefault();
+        this.props.addEmployee(this.state);
+    }
     render() {
         return(
             <div>
                 <h3>Add another drone</h3>
-                <form>
+                <form onSubmit={this.submitHandler}>
                     <label>
                         Name:
                         <input type="text" name="name" onChange={this.updateEmployee}/>

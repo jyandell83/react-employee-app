@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import CreateEmployee from '../CreateEmployee';
-
+import EmployeeList from '../EmployeeList';
 
 class EmployeeContainer extends Component {
     state = {
@@ -26,11 +26,38 @@ class EmployeeContainer extends Component {
             return err;
         }
     }
+    addEmployee = async (employee) => {
+        console.log(employee,' inside of addEmployee')
+    
+        try {
+          const createEmployee = await fetch('http://localhost:9000/api/v1/employee',{
+            method: 'POST',
+            body: JSON.stringify(employee),
+            headers: {
+              'Content-Type': 'application/json'
+            }
+          })
+          console.log(createEmployee, "<createEmployee fetch")
+          if(createEmployee.status !== 200){
+            throw Error('Resource not found')
+          }
+    
+          const createEmployeeResponse = await createEmployee.json();
+          console.log(createEmployeeResponse.data, ' createEmployeeResponse');
+          this.setState({
+            employees: [...this.state.employees, createEmployeeResponse.data]
+          })
+        } catch(err) {
+          console.log(err, ' addEmployee');
+          return err
+        }
+    }
     render() {
         return(
             <div>
                 <h2>This is the Employee Container</h2>
-                <CreateEmployee />
+                <CreateEmployee addEmployee={this.addEmployee}/>
+                <EmployeeList employees={this.state.employees}/>
             </div>
         );
     }
