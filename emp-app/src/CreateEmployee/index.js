@@ -7,7 +7,7 @@ class CreateEmployee extends Component {
         name: '',
         birthDate: '',
         department: '',
-        salary: ''
+        annualSalary: ''
     }
     updateEmployee = (e)  =>  {
         this.setState({
@@ -20,7 +20,7 @@ class CreateEmployee extends Component {
     }
     render() {
         return(
-            <div class="addForm">
+            <div className="addForm">
                 <h3>Add another drone</h3>
                 <Form onSubmit={this.submitHandler}>
                     <Form.Field>

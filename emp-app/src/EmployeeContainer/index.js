@@ -1,10 +1,19 @@
 import React, { Component } from 'react';
 import CreateEmployee from '../CreateEmployee';
 import EmployeeList from '../EmployeeList';
+import EditEmployee from '../EditEmployee';
 
 class EmployeeContainer extends Component {
     state = {
-        employees: []
+        employees: [],
+        isEditModalShowing: false,
+        employeeToEdit: {
+            _id: null,
+            name: '',
+            birthDate: '',
+            department: '',
+            salary: ''
+        }
     }
     componentDidMount() {
         this.getEmployees();
@@ -75,12 +84,20 @@ class EmployeeContainer extends Component {
             return err
           }
     }
+    showEditModal = async (employee) =>  {
+        console.log('edit me', employee);
+        this.setState({
+            employeeToEdit: employee,
+            isEditModalShowing: !this.state.isEditModalShowing
+        })
+    }
     render() {
         return(
             <div>
                 <h2>This is the Employee Container</h2>
                 <CreateEmployee addEmployee={this.addEmployee}/>
-                <EmployeeList employees={this.state.employees} remove = {this.deleteEmployee}/>
+                <EmployeeList employees={this.state.employees} remove = {this.deleteEmployee} showEditModal={this.showEditModal}/>
+                {this.state.isEditModalShowing ? <EditEmployee employee={this.state.employeeToEdit}/> : null}
             </div>
         );
     }
