@@ -52,12 +52,35 @@ class EmployeeContainer extends Component {
           return err
         }
     }
+    deleteEmployee = async (id) => {
+        console.log('delete me', id);
+        try {
+
+            const deleteEmployee = await fetch('http://localhost:9000/api/v1/employee/' + id, {
+              method: 'DELETE'
+            });
+      
+            if(deleteEmployee.status !== 200){
+              throw Error('Something happend on delete')
+            }
+      
+            // const deleteEmployeeJson = await deleteEmployee.json();
+      
+            this.setState({
+              employees: this.state.employees.filter((employee) => employee._id !== id)
+            })
+      
+          } catch(err){
+            console.log(err);
+            return err
+          }
+    }
     render() {
         return(
             <div>
                 <h2>This is the Employee Container</h2>
                 <CreateEmployee addEmployee={this.addEmployee}/>
-                <EmployeeList employees={this.state.employees}/>
+                <EmployeeList employees={this.state.employees} remove = {this.deleteEmployee}/>
             </div>
         );
     }

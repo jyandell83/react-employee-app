@@ -1,7 +1,7 @@
 import React from 'react';
 import { Card, Button } from 'semantic-ui-react'
 
-const EmployeeList = ({ employees }) =>  {
+const EmployeeList = ({ employees, remove }) =>  {
     console.log(employees, 'props in employee list');
     return (
         <Card.Group centered>
@@ -19,7 +19,7 @@ const EmployeeList = ({ employees }) =>  {
                             <Button inverted color='green'>
                                 Edit
                             </Button>
-                            <Button inverted color='red'>
+                            <Button inverted color='red' onClick={() => remove(emp._id)}>
                                 Delete
                             </Button>
                             </div>
