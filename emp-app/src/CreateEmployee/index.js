@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import { Button, Form } from 'semantic-ui-react'
+import './CreateEmployee.css';
 
 class CreateEmployee extends Component {
     state = {
@@ -18,29 +20,29 @@ class CreateEmployee extends Component {
     }
     render() {
         return(
-            <div>
+            <div class="addForm">
                 <h3>Add another drone</h3>
-                <form onSubmit={this.submitHandler}>
-                    <label>
-                        Name:
+                <Form onSubmit={this.submitHandler}>
+                    <Form.Field>
+                        <label>Name:</label>
                         <input type="text" name="name" onChange={this.updateEmployee}/>
-                    </label><br />
-                    <label>
-                        Birth Date:
+                    </Form.Field>
+                    <Form.Field>
+                        <label>Birth Date:</label>
                         <input type="date" name="birthDate" onChange={this.updateEmployee}/>
-                    </label><br />
-                    <label>
-                        Department:
+                    </Form.Field>
+                    <Form.Field>
+                        <label>Department:</label>
                         <input type="text" name="department" onChange={this.updateEmployee}/>
-                    </label><br />
-                    <label>
-                        Salary:
+                    </Form.Field>
+                    <Form.Field>
+                        <label>Salary:</label>
                         <input type="text" name="annualSalary" onChange={this.updateEmployee}/>
-                    </label><br />
-                    <button type="submit">
+                    </Form.Field>
+                    <Button type="submit">
                         Submit
-                    </button>
-                </form>
+                    </Button>
+                </Form>
             </div>
         )
     }

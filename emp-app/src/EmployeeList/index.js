@@ -1,18 +1,37 @@
 import React from 'react';
+import { Card, Button } from 'semantic-ui-react'
 
 const EmployeeList = ({ employees }) =>  {
     console.log(employees, 'props in employee list');
     return (
-        <div>
+        <Card.Group centered>
             {
                 employees.map((emp,i) =>  {
                     return(
-                    <div key={i}>{emp.name}</div>
+                    
+                    <Card>
+                        <Card.Content>
+                            <Card.Header>{emp.name}</Card.Header>
+                            <Card.Meta>{emp.department}</Card.Meta>
+                        </Card.Content>
+                        <Card.Content extra>
+                            <div className='ui two buttons'>
+                            <Button inverted color='green'>
+                                Edit
+                            </Button>
+                            <Button inverted color='red'>
+                                Delete
+                            </Button>
+                            </div>
+                        </Card.Content>
+                    </Card>
                     )
                 })
             }
-        </div>
+        </Card.Group>
     )
 }
 
 export default EmployeeList;
+
+
