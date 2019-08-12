@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import RegisterUser from '../RegisterUser';
 import LogInUser from '../LogInUser';
+import Logout from '../Logout';
 import { Grid } from 'semantic-ui-react';
 
 
@@ -59,6 +60,18 @@ export default class AuthUser extends Component {
             return err;
         }
     }
+    logOutUser = async () => {
+        try {
+        await fetch('http://localhost:9000/auth/logout');
+        this.setState({
+            user: {},
+            isLogged: false
+        })
+        }
+        catch(err)  {
+            return err;
+        }
+    }
     render() {
         console.log(this.state);
         return(
@@ -77,7 +90,7 @@ export default class AuthUser extends Component {
                 </Grid.Column>
             </Grid> 
             :
-            <div>Hello {this.state.user.username}, log out</div>
+            <div>Hello {this.state.user.username}, <Logout logOutUser={this.logOutUser}/></div>
             }
             </div>
         );
