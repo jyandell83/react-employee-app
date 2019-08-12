@@ -24,10 +24,10 @@ const EditEmployee = (props)  =>  {
                         <label>Salary:</label>
                         <input type="text" name="annualSalary" value={props.employee.annualSalary} onChange={props.handleEditFormChange}/>
                     </Form.Field>
-                    <Button type="submit">
+                    <Button inverted color='yellow' type="submit" >
                         Modify
                     </Button>
-            </Form>
+            </Form> 
         </div>
     )
 }

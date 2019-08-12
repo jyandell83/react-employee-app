@@ -15,6 +15,7 @@ class EmployeeContainer extends Component {
             salary: ''
         }
     }
+    //Here is where we get employees from db
     componentDidMount() {
         this.getEmployees();
     }
@@ -33,6 +34,7 @@ class EmployeeContainer extends Component {
             return err;
         }
     }
+    //Here is where we create a new employee
     addEmployee = async (employee) => {
     
         try {
@@ -56,6 +58,7 @@ class EmployeeContainer extends Component {
           return err
         }
     }
+    //Here is where we delete an employee
     deleteEmployee = async (id) => {
         try {
 
@@ -78,12 +81,14 @@ class EmployeeContainer extends Component {
             return err
           }
     }
+    //this shows edit modal to edit employee info
     showEditModal = async (employee) =>  {
         this.setState({
             employeeToEdit: employee,
             isEditModalShowing: !this.state.isEditModalShowing
         })
     }
+    //form change handler inside EditEmployee
     handleEditFormChange = (e) =>  {
         this.setState({
             employeeToEdit: {
@@ -92,6 +97,7 @@ class EmployeeContainer extends Component {
             }
         })
     }
+    //---edit - submit - close ---
     editEmpAndCloseModal = async (e) =>  {
         e.preventDefault();
         try {

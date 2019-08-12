@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Button, Form } from 'semantic-ui-react'
+import { Button, Form, Input, Icon } from 'semantic-ui-react';
 import './CreateEmployee.css';
 
 class CreateEmployee extends Component {
@@ -25,7 +25,10 @@ class CreateEmployee extends Component {
                 <Form onSubmit={this.submitHandler}>
                     <Form.Field>
                         <label>Name:</label>
-                        <input type="text" name="name" onChange={this.updateEmployee}/>
+                        <Input icon label='Name: ' placeholder='Name' type="text" name="name" onChange={this.updateEmployee}>
+                            <input />
+                            <Icon name='smile outline' /> 
+                        </Input>
                     </Form.Field>
                     <Form.Field>
                         <label>Birth Date:</label>
@@ -39,7 +42,7 @@ class CreateEmployee extends Component {
                         <label>Salary:</label>
                         <input type="text" name="annualSalary" onChange={this.updateEmployee}/>
                     </Form.Field>
-                    <Button type="submit">
+                    <Button inverted color="yellow" type="submit">
                         Submit
                     </Button>
                 </Form>
