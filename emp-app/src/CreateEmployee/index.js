@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Button, Form, Input, Icon } from 'semantic-ui-react';
+import { Button, Form, Input, Icon, Accordion } from 'semantic-ui-react';
 import './CreateEmployee.css';
 
 class CreateEmployee extends Component {
@@ -7,7 +7,8 @@ class CreateEmployee extends Component {
         name: '',
         birthDate: '',
         department: '',
-        annualSalary: ''
+        annualSalary: '',
+        activeIndex: 1 
     }
     updateEmployee = (e)  =>  {
         this.setState({
@@ -18,10 +19,20 @@ class CreateEmployee extends Component {
         e.preventDefault();
         this.props.addEmployee(this.state);
     }
+    handleClick = (e, titleProps) => {
+        const { index } = titleProps
+        const { activeIndex } = this.state
+        const newIndex = activeIndex === index ? -1 : index
+    
+        this.setState({ activeIndex: newIndex })
+    }
+    
     render() {
+        const { activeIndex } = this.state
         return(
-            <div className="addForm">
-                <h3>Add another drone</h3>
+            <Accordion className="addForm">
+                 <Accordion.Title active={activeIndex === 0} index={0} onClick={this.handleClick}><Icon name='dropdown' />Add another drone</Accordion.Title>
+                 <Accordion.Content active={activeIndex === 0}>
                 <Form onSubmit={this.submitHandler}>
                     <Form.Field>
                         <label>Name:</label>
@@ -46,7 +57,8 @@ class CreateEmployee extends Component {
                         Submit
                     </Button>
                 </Form>
-            </div>
+                </Accordion.Content>
+            </Accordion>
         )
     }
 }
