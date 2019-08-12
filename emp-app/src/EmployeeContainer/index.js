@@ -21,12 +21,10 @@ class EmployeeContainer extends Component {
     getEmployees = async () =>  {
         try {
             const responseGetEmployees = await fetch('http://localhost:9000/api/v1/employee');
-            console.log(responseGetEmployees, 'responseGetEmployees in getEmployees app.js');
             if(responseGetEmployees.status !== 200){
                 throw Error('404 from server');
             }
             const employeesResponse = await responseGetEmployees.json();
-            console.log(employeesResponse, 'employees response after json');
             this.setState({
                 employees: [...employeesResponse.data]
             });
@@ -36,7 +34,6 @@ class EmployeeContainer extends Component {
         }
     }
     addEmployee = async (employee) => {
-        console.log(employee,' inside of addEmployee')
     
         try {
           const createEmployee = await fetch('http://localhost:9000/api/v1/employee',{
@@ -46,13 +43,11 @@ class EmployeeContainer extends Component {
               'Content-Type': 'application/json'
             }
           })
-          console.log(createEmployee, "<createEmployee fetch")
           if(createEmployee.status !== 200){
             throw Error('Resource not found')
           }
     
           const createEmployeeResponse = await createEmployee.json();
-          console.log(createEmployeeResponse.data, ' createEmployeeResponse');
           this.setState({
             employees: [...this.state.employees, createEmployeeResponse.data]
           })
@@ -62,7 +57,6 @@ class EmployeeContainer extends Component {
         }
     }
     deleteEmployee = async (id) => {
-        console.log('delete me', id);
         try {
 
             const deleteEmployee = await fetch('http://localhost:9000/api/v1/employee/' + id, {
@@ -85,19 +79,58 @@ class EmployeeContainer extends Component {
           }
     }
     showEditModal = async (employee) =>  {
-        console.log('edit me', employee);
         this.setState({
             employeeToEdit: employee,
             isEditModalShowing: !this.state.isEditModalShowing
         })
     }
+    handleEditFormChange = (e) =>  {
+        this.setState({
+            employeeToEdit: {
+              ...this.state.employeeToEdit,
+              [e.target.name]: e.target.value
+            }
+        })
+    }
+    editEmpAndCloseModal = async (e) =>  {
+        e.preventDefault();
+        try {
+            const editRequest = await fetch('http://localhost:9000/api/v1/employee/' + this.state.employeeToEdit._id, {
+            method: 'PUT',
+            body: JSON.stringify(this.state.employeeToEdit),
+            headers: {
+             'Content-Type': 'application/json'
+        }
+      })
+
+      if(editRequest.status !== 200){
+        throw Error('edit is not working')
+      }
+      const editResponse = await editRequest.json();
+
+      const editedEmployeeArray = this.state.employees.map((employee) => {
+        if(employee._id === editResponse.data._id){
+          employee = editResponse.data
+        }
+
+        return employee
+      });
+      this.setState({
+        employees: editedEmployeeArray,
+        isEditModalShowing: false
+      })
+        } catch(err){
+            console.log(err, ' error editEmpAndCloseModal');
+            return err
+          }
+    }
     render() {
         return(
             <div>
-                <h2>This is the Employee Container</h2>
                 <CreateEmployee addEmployee={this.addEmployee}/>
+                <h2>The Brood</h2>
                 <EmployeeList employees={this.state.employees} remove = {this.deleteEmployee} showEditModal={this.showEditModal}/>
-                {this.state.isEditModalShowing ? <EditEmployee employee={this.state.employeeToEdit}/> : null}
+                {this.state.isEditModalShowing ? <EditEmployee employee={this.state.employeeToEdit} handleEditFormChange={this.handleEditFormChange} editEmpAndCloseModal={this.editEmpAndCloseModal}/> : null}
             </div>
         );
     }

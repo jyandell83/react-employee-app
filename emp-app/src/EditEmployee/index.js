@@ -3,29 +3,29 @@ import { Button, Form } from 'semantic-ui-react'
 
 
 
-const EditEmployee = ({ employee })  =>  {
-    const dateStr = employee.birthDate.substring(0,10);
+const EditEmployee = (props)  =>  {
+    const dateStr = props.employee.birthDate.substring(0,10);
     return(
         <div>
-            <Form>
+            <Form onSubmit={props.editEmpAndCloseModal}>
                     <Form.Field>
                         <label>Name:</label>
-                        <input type="text" name="name" value={employee.name} />
+                        <input type="text" name="name" value={props.employee.name} onChange={props.handleEditFormChange}/>
                     </Form.Field>
                     <Form.Field>
                         <label>Birth Date:</label>
-                        <input type="date" name="birthDate" value={dateStr}/>
+                        <input type="date" name="birthDate" value={dateStr} onChange={props.handleEditFormChange}/>
                     </Form.Field>
                     <Form.Field>
                         <label>Department:</label>
-                        <input type="text" name="department" value={employee.department}/>
+                        <input type="text" name="department" value={props.employee.department} onChange={props.handleEditFormChange}/>
                     </Form.Field>
                     <Form.Field>
                         <label>Salary:</label>
-                        <input type="text" name="annualSalary" value={employee.annualSalary}/>
+                        <input type="text" name="annualSalary" value={props.employee.annualSalary} onChange={props.handleEditFormChange}/>
                     </Form.Field>
                     <Button type="submit">
-                        Submit
+                        Modify
                     </Button>
             </Form>
         </div>

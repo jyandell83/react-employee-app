@@ -6,7 +6,7 @@ import EmployeeContainer from './EmployeeContainer'
 function App() {
   return (
     <div className="App">
-      <h1>This the heading in App.js</h1>
+      <h1>Welcome to the Hive</h1>
       <EmployeeContainer />
     </div>
   );
